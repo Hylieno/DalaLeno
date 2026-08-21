@@ -22,8 +22,21 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness
-          cat .payload/logo/*.b64 | tr -d '\n\r' | base64 --decode > plugins/LogogramHelperFR/latest.zip
-          cat .payload/occult/*.b64 | tr -d '\n\r' | base64 --decode > plugins/OccultWeakness/latest.zip
+          cat \
+            .payload/logo/00.b64 \
+            .payload/logo/01.b64 \
+            .payload/logo/02.b64 \
+            .payload/logo/03.b64 \
+            | tr -d '\n\r' | base64 --decode > plugins/LogogramHelperFR/latest.zip
+          cat \
+            .payload/occult/00.b64 \
+            .payload/occult/01.b64 \
+            .payload/occult/02.b64 \
+            .payload/occult/03a.b64 \
+            .payload/occult/03b1.b64 \
+            .payload/occult/03b2a.b64 \
+            .payload/occult/03b2final.b64 \
+            | tr -d '\n\r' | base64 --decode > plugins/OccultWeakness/latest.zip
           unzip -t plugins/LogogramHelperFR/latest.zip
           unzip -t plugins/OccultWeakness/latest.zip
 
