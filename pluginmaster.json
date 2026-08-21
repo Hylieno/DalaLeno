@@ -1,0 +1,35 @@
+[
+  {
+    "Author": "apetih + FR+ by Hylieno",
+    "Name": "Logogram Helper FR+",
+    "InternalName": "LogogramHelper",
+    "AssemblyVersion": "0.1.6.0",
+    "Description": "Conserve les fonctions originales de Logogram Helper, ajoute /logo, mémorise le dernier stock de logogrammes et indique de quel éclat vient chaque logogramme.",
+    "Punchline": "Assistant Logos pour Eureka, en français et consultable partout.",
+    "RepoUrl": "https://github.com/Hylieno/LogogramHelperFR",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Tags": ["eureka", "logograms", "logos", "french"],
+    "CategoryTags": ["utility"],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/LogogramHelperFR/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/LogogramHelperFR/latest.zip"
+  },
+  {
+    "Author": "Hylieno",
+    "Name": "Occult Weakness",
+    "InternalName": "OccultWeakness",
+    "AssemblyVersion": "0.1.0.0",
+    "Description": "Associe des monstres à une faiblesse élémentaire et affiche l'icône correspondante à gauche du nom de la cible. Commande : /ocweak",
+    "Punchline": "Affiche la faiblesse élémentaire de la cible sur son nameplate.",
+    "RepoUrl": "https://github.com/Hylieno/OccultWeakness",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Tags": ["occult crescent", "nameplate", "element"],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/latest.zip"
+  }
+]
