@@ -1,0 +1,42 @@
+name: Build plugin packages
+
+on:
+  push:
+    paths:
+      - '.payload/**'
+      - '.github/workflows/build-packages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Rebuild plugin ZIP files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness
+          cat .payload/logo/*.b64 | tr -d '\n\r' | base64 --decode > plugins/LogogramHelperFR/latest.zip
+          cat .payload/occult/*.b64 | tr -d '\n\r' | base64 --decode > plugins/OccultWeakness/latest.zip
+          unzip -t plugins/LogogramHelperFR/latest.zip
+          unzip -t plugins/OccultWeakness/latest.zip
+
+      - name: Commit packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugins/LogogramHelperFR/latest.zip plugins/OccultWeakness/latest.zip
+          if git diff --cached --quiet; then
+            echo "Packages already up to date."
+            exit 0
+          fi
+          git commit -m "Build Dalamud plugin packages"
+          git push
