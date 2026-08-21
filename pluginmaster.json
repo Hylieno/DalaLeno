@@ -2,8 +2,8 @@
   {
     "Author": "apetih + FR+ by Hylieno",
     "Name": "Logogram Helper FR+",
-    "InternalName": "LogogramHelper",
-    "AssemblyVersion": "0.1.6.0",
+    "InternalName": "LogogramHelperFR",
+    "AssemblyVersion": "0.1.7.0",
     "Description": "Conserve les fonctions originales de Logogram Helper, ajoute /logo, mémorise le dernier stock de logogrammes et indique de quel éclat vient chaque logogramme.",
     "Punchline": "Assistant Logos pour Eureka, en français et consultable partout.",
     "RepoUrl": "https://github.com/Hylieno/LogogramHelperFR",
