@@ -3,7 +3,7 @@
     "Author": "apetih + FR+ by Hylieno",
     "Name": "Logogram Helper FR+ DEV",
     "InternalName": "LogogramHelperFRDev",
-    "AssemblyVersion": "0.1.8.5",
+    "AssemblyVersion": "0.1.8.6",
     "Description": "Version de test bilingue FR/EN de Logogram Helper FR+. Le bouton FR/EN change toute l'interface, les noms d'actions, descriptions, logogrammes, éclats et tooltips.",
     "Punchline": "DEV - Assistant Logos bilingue FR/EN pour Eureka.",
     "RepoUrl": "https://github.com/Hylieno/LogogramHelperFR",
