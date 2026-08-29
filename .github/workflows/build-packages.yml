@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/build-packages.yml'
+      - 'pluginmaster.json'
 
 permissions:
   contents: write
@@ -88,21 +89,16 @@ jobs:
                   for a,b in zip(xs[0::2], xs[1::2]):
                       rect(a,y,b+1,y+1,c)
 
-          # gold outer frame
           gold=(202,162,78); darkgold=(117,78,30); wood=(91,57,27); wood2=(127,79,35)
           parchment=(215,193,145); paper2=(185,162,112); green=(64,170,83); green2=(33,112,51)
           rect(14,14,498,498,gold); rect(24,24,488,488,(9,20,35))
-
-          # market board
           rect(62,88,350,350,darkgold); rect(70,96,342,342,wood)
           rect(84,112,328,326,parchment)
           rect(72,78,340,110,wood2)
           rect(88,88,324,100,gold)
-          # posts
           rect(52,72,80,386,darkgold); rect(60,80,72,378,wood2)
           rect(332,72,360,386,darkgold); rect(340,80,352,378,wood2)
           rect(48,370,364,390,darkgold)
-          # pinned listing cards
           cards=[(104,142),(184,142),(264,142),(104,222),(184,222),(264,222)]
           for idx,(x,y) in enumerate(cards):
               cc = paper2 if idx%2 else (226,207,166)
@@ -111,18 +107,11 @@ jobs:
               rect(x+8,y+20,x+40,y+24,(116,95,59))
               rect(x+8,y+31,x+34,y+34,(130,108,69))
               rect(x+8,y+42,x+38,y+45,(130,108,69))
-
-          # coin foreground
           circle(340,318,105,darkgold); circle(340,318,94,(231,185,61)); circle(340,318,80,(212,158,39))
-          # stylized gil G mark
           circle(340,318,47,(247,215,115)); circle(340,318,34,(212,158,39))
           rect(340,310,382,326,(247,215,115)); rect(366,318,382,348,(247,215,115))
-
-          # downward arrow
           poly([(370,350),(414,350),(414,397),(447,397),(392,460),(337,397),(370,397)], green2)
           poly([(378,356),(406,356),(406,405),(429,405),(392,446),(355,405),(378,405)], green)
-
-          # subtle highlights
           rect(34,34,478,40,(240,204,117)); rect(34,472,478,478,darkgold)
 
           raw = bytearray()
