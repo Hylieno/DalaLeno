@@ -12,9 +12,10 @@ Activez le dépôt, sauvegardez, puis ouvrez `/xlplugins`.
 
 ## Plugins
 
-- **Logogram Helper FR+** — assistant français pour les actions Logos d'Eureka.
+- **Logogram Helper FR+** — assistant bilingue français/anglais pour les actions Logos d'Eureka.
 - **Occult Weakness** — affiche la faiblesse élémentaire enregistrée de la cible.
+- **DalaLeno Undercut** — automatise le repricing des ventes d'un servant à partir des données live du Market Board, avec gestion séparée des objets HQ/NQ et un undercut configurable.
 
 ## Mise à jour
 
-Chaque entrée de `pluginmaster.json` pointe vers un `latest.zip` stocké dans ce dépôt, sous `plugins/<NomDuPlugin>/latest.zip`. La valeur `AssemblyVersion` doit correspondre à la version du plugin contenu dans le ZIP.
+Les entrées de `pluginmaster.json` indiquent à Dalamud où télécharger la version compilée de chaque plugin. La valeur `AssemblyVersion` doit correspondre à la version du plugin contenu dans son ZIP.
