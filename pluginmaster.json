@@ -46,7 +46,7 @@
     "CategoryTags": ["utility"],
     "IsHide": false,
     "IsTestingExclusive": false,
-    "DownloadLinkInstall": "https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip",
-    "DownloadLinkUpdate": "https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip"
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/latest.zip"
   }
 ]
