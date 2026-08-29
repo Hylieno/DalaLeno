@@ -7,6 +7,7 @@
     "Description": "Conserve les fonctions originales de Logogram Helper, ajoute /logo, mémorise le dernier stock de logogrammes, indique de quel éclat vient chaque logogramme et permet de basculer toute l'interface entre français et anglais.",
     "Punchline": "Assistant Logos bilingue FR/EN pour Eureka, consultable partout.",
     "RepoUrl": "https://github.com/Hylieno/LogogramHelperFR",
+    "IconUrl": "https://raw.githubusercontent.com/Hylieno/LogogramHelperFR/main/res/img/logoslogo.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
     "Tags": ["eureka", "logograms", "logos", "french", "english"],
