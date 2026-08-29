@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-packages.yml'
 
 permissions:
   contents: write
@@ -21,13 +25,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness
+          mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness plugins/DalaUndercut
+
           cat \
             .payload/logo/00.b64 \
             .payload/logo/01.b64 \
             .payload/logo/02.b64 \
             .payload/logo/03.b64 \
             | tr -d '\n\r' | base64 --decode > plugins/LogogramHelperFR/latest.zip
+
           cat \
             .payload/occult/00.b64 \
             .payload/occult/01.b64 \
@@ -37,8 +43,19 @@ jobs:
             .payload/occult/03b2a.b64 \
             .payload/occult/03b2final.b64 \
             | tr -d '\n\r' | base64 --decode > plugins/OccultWeakness/latest.zip
+
+          curl -fL --retry 3 \
+            https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip \
+            -o plugins/DalaUndercut/latest.zip
+
+          curl -fL --retry 3 \
+            https://github.com/Hylieno/DalaUndercut/releases/download/dev-latest/DalaLenoUndercut-dev-latest.zip \
+            -o plugins/DalaUndercut/dev-latest.zip
+
           unzip -t plugins/LogogramHelperFR/latest.zip
           unzip -t plugins/OccultWeakness/latest.zip
+          unzip -t plugins/DalaUndercut/latest.zip
+          unzip -t plugins/DalaUndercut/dev-latest.zip
 
       - name: Commit packages to main
         shell: bash
@@ -46,7 +63,11 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add plugins/LogogramHelperFR/latest.zip plugins/OccultWeakness/latest.zip
+          git add \
+            plugins/LogogramHelperFR/latest.zip \
+            plugins/OccultWeakness/latest.zip \
+            plugins/DalaUndercut/latest.zip \
+            plugins/DalaUndercut/dev-latest.zip
           if git diff --cached --quiet; then
             echo "Packages already up to date."
             exit 0
