@@ -48,6 +48,100 @@ jobs:
           unzip -t plugins/DalaUndercut/latest.zip
           unzip -t plugins/DalaUndercut/dev-latest.zip
 
+      - name: Generate DalaUndercut icon
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import struct, zlib, math
+
+          W = H = 512
+          px = bytearray([12, 25, 43] * W * H)
+
+          def put(x, y, c):
+              if 0 <= x < W and 0 <= y < H:
+                  i = (y * W + x) * 3
+                  px[i:i+3] = bytes(c)
+
+          def rect(x0, y0, x1, y1, c):
+              x0, y0 = max(0,x0), max(0,y0)
+              x1, y1 = min(W,x1), min(H,y1)
+              for y in range(y0, y1):
+                  i = (y * W + x0) * 3
+                  px[i:i+(x1-x0)*3] = bytes(c) * (x1-x0)
+
+          def circle(cx, cy, r, c):
+              rr = r*r
+              for y in range(max(0,cy-r), min(H,cy+r+1)):
+                  dy = y-cy
+                  dx = int((rr-dy*dy)**0.5) if rr >= dy*dy else 0
+                  rect(cx-dx, y, cx+dx+1, y+1, c)
+
+          def poly(points, c):
+              ys = [p[1] for p in points]
+              for y in range(max(0,min(ys)), min(H,max(ys)+1)):
+                  xs=[]
+                  for (x1,y1),(x2,y2) in zip(points, points[1:]+points[:1]):
+                      if y1 == y2: continue
+                      if min(y1,y2) <= y < max(y1,y2):
+                          xs.append(int(x1 + (y-y1)*(x2-x1)/(y2-y1)))
+                  xs.sort()
+                  for a,b in zip(xs[0::2], xs[1::2]):
+                      rect(a,y,b+1,y+1,c)
+
+          # gold outer frame
+          gold=(202,162,78); darkgold=(117,78,30); wood=(91,57,27); wood2=(127,79,35)
+          parchment=(215,193,145); paper2=(185,162,112); green=(64,170,83); green2=(33,112,51)
+          rect(14,14,498,498,gold); rect(24,24,488,488,(9,20,35))
+
+          # market board
+          rect(62,88,350,350,darkgold); rect(70,96,342,342,wood)
+          rect(84,112,328,326,parchment)
+          rect(72,78,340,110,wood2)
+          rect(88,88,324,100,gold)
+          # posts
+          rect(52,72,80,386,darkgold); rect(60,80,72,378,wood2)
+          rect(332,72,360,386,darkgold); rect(340,80,352,378,wood2)
+          rect(48,370,364,390,darkgold)
+          # pinned listing cards
+          cards=[(104,142),(184,142),(264,142),(104,222),(184,222),(264,222)]
+          for idx,(x,y) in enumerate(cards):
+              cc = paper2 if idx%2 else (226,207,166)
+              rect(x,y,x+48,y+60,cc)
+              circle(x+24,y+6,3,gold)
+              rect(x+8,y+20,x+40,y+24,(116,95,59))
+              rect(x+8,y+31,x+34,y+34,(130,108,69))
+              rect(x+8,y+42,x+38,y+45,(130,108,69))
+
+          # coin foreground
+          circle(340,318,105,darkgold); circle(340,318,94,(231,185,61)); circle(340,318,80,(212,158,39))
+          # stylized gil G mark
+          circle(340,318,47,(247,215,115)); circle(340,318,34,(212,158,39))
+          rect(340,310,382,326,(247,215,115)); rect(366,318,382,348,(247,215,115))
+
+          # downward arrow
+          poly([(370,350),(414,350),(414,397),(447,397),(392,460),(337,397),(370,397)], green2)
+          poly([(378,356),(406,356),(406,405),(429,405),(392,446),(355,405),(378,405)], green)
+
+          # subtle highlights
+          rect(34,34,478,40,(240,204,117)); rect(34,472,478,478,darkgold)
+
+          raw = bytearray()
+          for y in range(H):
+              raw.append(0)
+              raw.extend(px[y*W*3:(y+1)*W*3])
+
+          def chunk(tag, data):
+              return struct.pack('>I', len(data)) + tag + data + struct.pack('>I', zlib.crc32(tag+data)&0xffffffff)
+
+          png = b'\x89PNG\r\n\x1a\n'
+          png += chunk(b'IHDR', struct.pack('>IIBBBBB', W,H,8,2,0,0,0))
+          png += chunk(b'IDAT', zlib.compress(bytes(raw), 9))
+          png += chunk(b'IEND', b'')
+          open('plugins/DalaUndercut/icon.png','wb').write(png)
+          PY
+
+          file plugins/DalaUndercut/icon.png
+
       - name: Commit packages to main
         shell: bash
         run: |
@@ -58,7 +152,8 @@ jobs:
             plugins/LogogramHelperFR/latest.zip \
             plugins/OccultWeakness/latest.zip \
             plugins/DalaUndercut/latest.zip \
-            plugins/DalaUndercut/dev-latest.zip
+            plugins/DalaUndercut/dev-latest.zip \
+            plugins/DalaUndercut/icon.png
           if git diff --cached --quiet; then
             echo "Packages already up to date."
             exit 0
