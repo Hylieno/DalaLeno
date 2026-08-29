@@ -40,6 +40,7 @@
     "Description": "Automatise le repricing des ventes d'un servant avec les données live du Market Board, en respectant HQ/NQ, les propres servants et le délai configuré.",
     "Punchline": "Undercut automatique des ventes de servant.",
     "RepoUrl": "https://github.com/Hylieno/DalaUndercut",
+    "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/icon.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
     "Tags": ["market", "retainer", "undercut"],
