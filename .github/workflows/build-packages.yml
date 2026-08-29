@@ -21,28 +21,19 @@ jobs:
         with:
           ref: main
 
-      - name: Rebuild plugin ZIP files
+      - name: Sync plugin ZIP files
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness plugins/DalaUndercut
 
-          cat \
-            .payload/logo/00.b64 \
-            .payload/logo/01.b64 \
-            .payload/logo/02.b64 \
-            .payload/logo/03.b64 \
-            | tr -d '\n\r' | base64 --decode > plugins/LogogramHelperFR/latest.zip
+          curl -fL --retry 3 \
+            https://raw.githubusercontent.com/Hylieno/LogogramHelperFR/main/dist/latest.zip \
+            -o plugins/LogogramHelperFR/latest.zip
 
-          cat \
-            .payload/occult/00.b64 \
-            .payload/occult/01.b64 \
-            .payload/occult/02.b64 \
-            .payload/occult/03a.b64 \
-            .payload/occult/03b1.b64 \
-            .payload/occult/03b2a.b64 \
-            .payload/occult/03b2final.b64 \
-            | tr -d '\n\r' | base64 --decode > plugins/OccultWeakness/latest.zip
+          curl -fL --retry 3 \
+            https://raw.githubusercontent.com/Hylieno/OccultWeakness/main/dist/latest.zip \
+            -o plugins/OccultWeakness/latest.zip
 
           curl -fL --retry 3 \
             https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip \
@@ -72,5 +63,5 @@ jobs:
             echo "Packages already up to date."
             exit 0
           fi
-          git commit -m "Build Dalamud plugin packages"
+          git commit -m "Sync Dalamud plugin packages [skip ci]"
           git push origin HEAD:main
