@@ -31,5 +31,22 @@
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/latest.zip"
+  },
+  {
+    "Author": "DalaLeno",
+    "Name": "DalaLeno Undercut",
+    "InternalName": "DalaLenoUndercut",
+    "AssemblyVersion": "0.3.5.0",
+    "Description": "Automatise le repricing des ventes d'un servant avec les données live du Market Board, en respectant HQ/NQ, les propres servants et le délai configuré.",
+    "Punchline": "Undercut automatique des ventes de servant.",
+    "RepoUrl": "https://github.com/Hylieno/DalaUndercut",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Tags": ["market", "retainer", "undercut"],
+    "CategoryTags": ["utility"],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip",
+    "DownloadLinkUpdate": "https://github.com/Hylieno/DalaUndercut/releases/latest/download/DalaLenoUndercut-latest.zip"
   }
 ]
