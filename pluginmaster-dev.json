@@ -54,7 +54,7 @@
     "Author": "DalaLeno",
     "Name": "DalaFacing DEV",
     "InternalName": "DalaFacing",
-    "AssemblyVersion": "0.2.0.0",
+    "AssemblyVersion": "0.2.1.0",
     "Description": "Version de développement de DalaFacing. Affiche une flèche 3D configurable au-dessus d'un mob sélectionné et continue de le suivre lorsque la cible du joueur change.",
     "Punchline": "DEV - Indique clairement la direction regardée par un mob.",
     "RepoUrl": "https://github.com/Hylieno/DalaFacing",
