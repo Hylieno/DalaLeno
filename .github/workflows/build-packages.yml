@@ -62,7 +62,35 @@ jobs:
           unzip -t plugins/DalaUndercut/dev-latest.zip
           unzip -t plugins/DalaFacing/latest.zip
           unzip -t plugins/DalaFacing/dev-latest.zip
-          file plugins/DalaFacing/icon.png
+          python3 - <<'PY'
+          import struct, zlib
+
+          path = 'plugins/DalaFacing/icon.png'
+          data = open(path, 'rb').read()
+          assert data[:8] == b'\x89PNG\r\n\x1a\n', 'Invalid PNG signature'
+          width, height = struct.unpack('>II', data[16:24])
+          assert (width, height) == (512, 512), f'Unexpected icon dimensions: {width}x{height}'
+
+          offset = 8
+          saw_iend = False
+          while offset < len(data):
+              assert offset + 12 <= len(data), 'Truncated PNG chunk header'
+              length = struct.unpack('>I', data[offset:offset + 4])[0]
+              end = offset + 12 + length
+              assert end <= len(data), 'Truncated PNG chunk'
+              chunk_type = data[offset + 4:offset + 8]
+              chunk_data = data[offset + 8:offset + 8 + length]
+              expected_crc = struct.unpack('>I', data[offset + 8 + length:end])[0]
+              actual_crc = zlib.crc32(chunk_type + chunk_data) & 0xffffffff
+              assert actual_crc == expected_crc, f'Invalid CRC for {chunk_type!r}'
+              offset = end
+              if chunk_type == b'IEND':
+                  saw_iend = True
+                  break
+
+          assert saw_iend and offset == len(data), 'PNG is incomplete or has trailing data'
+          print(f'Validated {path}: {width}x{height}, {len(data)} bytes')
+          PY
 
       - name: Generate DalaUndercut icon
         shell: bash
