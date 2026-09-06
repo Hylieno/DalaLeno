@@ -26,7 +26,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness plugins/DalaUndercut
+          mkdir -p plugins/LogogramHelperFR plugins/OccultWeakness plugins/DalaUndercut plugins/DalaFacing
 
           curl -fL --retry 3 \
             https://raw.githubusercontent.com/Hylieno/LogogramHelperFR/main/dist/latest.zip \
@@ -44,10 +44,25 @@ jobs:
             https://github.com/Hylieno/DalaUndercut/releases/download/dev-latest/DalaLenoUndercut-dev-latest.zip \
             -o plugins/DalaUndercut/dev-latest.zip
 
+          curl -fL --retry 3 \
+            https://github.com/Hylieno/DalaFacing/releases/latest/download/DalaFacing-latest.zip \
+            -o plugins/DalaFacing/latest.zip
+
+          curl -fL --retry 3 \
+            https://github.com/Hylieno/DalaFacing/releases/download/dev-latest/DalaFacing-dev-latest.zip \
+            -o plugins/DalaFacing/dev-latest.zip
+
+          curl -fL --retry 3 \
+            https://raw.githubusercontent.com/Hylieno/DalaFacing/main/icon.png \
+            -o plugins/DalaFacing/icon.png
+
           unzip -t plugins/LogogramHelperFR/latest.zip
           unzip -t plugins/OccultWeakness/latest.zip
           unzip -t plugins/DalaUndercut/latest.zip
           unzip -t plugins/DalaUndercut/dev-latest.zip
+          unzip -t plugins/DalaFacing/latest.zip
+          unzip -t plugins/DalaFacing/dev-latest.zip
+          file plugins/DalaFacing/icon.png
 
       - name: Generate DalaUndercut icon
         shell: bash
@@ -142,7 +157,10 @@ jobs:
             plugins/OccultWeakness/latest.zip \
             plugins/DalaUndercut/latest.zip \
             plugins/DalaUndercut/dev-latest.zip \
-            plugins/DalaUndercut/icon.png
+            plugins/DalaUndercut/icon.png \
+            plugins/DalaFacing/latest.zip \
+            plugins/DalaFacing/dev-latest.zip \
+            plugins/DalaFacing/icon.png
           if git diff --cached --quiet; then
             echo "Packages already up to date."
             exit 0

@@ -9,8 +9,17 @@
     "RepoUrl": "https://github.com/Hylieno/LogogramHelperFR",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "Tags": ["eureka", "logograms", "logos", "french", "english", "dev"],
-    "CategoryTags": ["utility"],
+    "Tags": [
+      "eureka",
+      "logograms",
+      "logos",
+      "french",
+      "english",
+      "dev"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
     "IsHide": false,
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/LogogramHelperFR/dev-language-toggle/dist/dev-latest.zip",
@@ -27,11 +36,44 @@
     "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/icon.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "Tags": ["market", "retainer", "undercut", "dev"],
-    "CategoryTags": ["utility"],
+    "Tags": [
+      "market",
+      "retainer",
+      "undercut",
+      "dev"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
     "IsHide": false,
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/dev-latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/dev-latest.zip"
+  },
+  {
+    "Author": "DalaLeno",
+    "Name": "DalaFacing DEV",
+    "InternalName": "DalaFacing",
+    "AssemblyVersion": "0.2.0.0",
+    "Description": "Version de développement de DalaFacing. Affiche une flèche 3D configurable au-dessus d'un mob sélectionné et continue de le suivre lorsque la cible du joueur change.",
+    "Punchline": "DEV - Indique clairement la direction regardée par un mob.",
+    "RepoUrl": "https://github.com/Hylieno/DalaFacing",
+    "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/icon.png",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Tags": [
+      "combat",
+      "target",
+      "facing",
+      "overlay",
+      "dev"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/dev-latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/dev-latest.zip"
   }
 ]

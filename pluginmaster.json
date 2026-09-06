@@ -10,8 +10,16 @@
     "IconUrl": "https://raw.githubusercontent.com/Hylieno/LogogramHelperFR/main/res/img/logoslogo.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "Tags": ["eureka", "logograms", "logos", "french", "english"],
-    "CategoryTags": ["utility"],
+    "Tags": [
+      "eureka",
+      "logograms",
+      "logos",
+      "french",
+      "english"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
     "IsHide": false,
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/LogogramHelperFR/latest.zip",
@@ -28,7 +36,11 @@
     "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/icon.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "Tags": ["occult crescent", "nameplate", "element"],
+    "Tags": [
+      "occult crescent",
+      "nameplate",
+      "element"
+    ],
     "IsHide": false,
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/OccultWeakness/latest.zip",
@@ -45,11 +57,42 @@
     "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/icon.png",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
-    "Tags": ["market", "retainer", "undercut"],
-    "CategoryTags": ["utility"],
+    "Tags": [
+      "market",
+      "retainer",
+      "undercut"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
     "IsHide": false,
     "IsTestingExclusive": false,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaUndercut/latest.zip"
+  },
+  {
+    "Author": "DalaLeno",
+    "Name": "DalaFacing",
+    "InternalName": "DalaFacing",
+    "AssemblyVersion": "0.2.0.0",
+    "Description": "Affiche une flèche 3D configurable au-dessus d'un mob sélectionné et continue de le suivre lorsque la cible du joueur change.",
+    "Punchline": "Indique clairement la direction regardée par un mob.",
+    "RepoUrl": "https://github.com/Hylieno/DalaFacing",
+    "IconUrl": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/icon.png",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Tags": [
+      "combat",
+      "target",
+      "facing",
+      "overlay"
+    ],
+    "CategoryTags": [
+      "utility"
+    ],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Hylieno/DalaLeno/main/plugins/DalaFacing/latest.zip"
   }
 ]
