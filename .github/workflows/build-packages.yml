@@ -53,7 +53,7 @@ jobs:
             -o plugins/DalaFacing/dev-latest.zip
 
           curl -fL --retry 3 \
-            https://raw.githubusercontent.com/Hylieno/DalaFacing/main/icon.png \
+            "https://raw.githubusercontent.com/Hylieno/DalaFacing/main/icon.png?cachebust=${GITHUB_RUN_ID}" \
             -o plugins/DalaFacing/icon.png
 
           unzip -t plugins/LogogramHelperFR/latest.zip
