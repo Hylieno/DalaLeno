@@ -139,6 +139,20 @@ Cette règle concerne uniquement les nouveaux plugins. Elle n'autorise ni la mig
 - Workflow : vérifier la syntaxe YAML et les branches/paths de déclenchement.
 - Overlay ou automation : un build réussi ne remplace pas un test en jeu. Signaler clairement ce qui n'a pas été testé dans FFXIV.
 
+### Environnement de compilation Codex Cloud
+
+Cette consigne concerne les quatre dépôts de plugins : `LogogramHelperFR`, `OccultWeakness`, `DalaUndercut` et `DalaFacing`.
+
+Dans Codex Cloud, avant toute commande `dotnet` (`restore`, `build`, `test`, etc.), activer l'environnement existant dans le shell qui exécutera la commande :
+
+```bash
+source /workspace/.cloud-setup/activate.sh
+```
+
+Cette activation est nécessaire parce que .NET 10 n'est pas directement disponible dans le shell par défaut. Après activation, utiliser les SDK et dépendances Dalamud déjà installés. Pour compiler sous Linux, conserver les paramètres de compatibilité nécessaires, notamment `-p:EnableWindowsTargeting=true`.
+
+Ne pas réinstaller .NET ou Dalamud inutilement : vérifier d'abord les outils disponibles et respecter les configurations propres à chaque projet.
+
 ## Limites de ce dépôt
 
 Les documents de ce dépôt décrivent l'écosystème, mais le dépôt source de chaque plugin reste la référence pour son implémentation. Si le code contredit un document historique, corriger la documentation ou signaler l'écart avant de changer le comportement.
