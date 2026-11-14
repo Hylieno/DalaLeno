@@ -53,6 +53,54 @@ Ce dépôt est le **catalogue et dépôt de distribution** de la famille de plug
 - Avant tout nouveau travail, vérifier si le changement appartient encore à `dev-language-toggle` ou s'il faut une autre branche; demander confirmation si ce n'est pas évident.
 - Ne pas fusionner automatiquement dans `main`.
 
+## Particularités des workflows GitHub Actions
+
+Les points suivants décrivent les 12 workflows inspectés le 14 novembre 2026. Relire les workflows avant une opération distante : ces mécanismes peuvent évoluer.
+
+### Compilation, publication et commits automatiques
+
+- Les quatre dépôts sources compilent sous Windows avec .NET 10, téléchargent Dalamud, puis exécutent `dotnet restore` et un build Release. DalaLeno ne compile pas les plugins.
+- DalaFacing et DalaUndercut : `ci.yml` compile sur les push vers `dev`/`main` et les PR ciblant ces branches, puis conserve un artifact. `dev-release.yml` compile et crée ou met à jour la préversion GitHub `dev-latest` à chaque push sur `dev`. `release.yml` compile et publie à chaque push sur `main`, y compris documentaire, sauf si le message du commit de tête contient `[skip release]`. La publication est indépendante du workflow CI et n'attend pas son succès. Aucun de ces workflows ne commet de package dans le dépôt source.
+- Leur `promote.yml`, lancé uniquement par `workflow_dispatch`, crée ou réutilise une PR `dev → main`; il ne fusionne pas et ne vérifie pas lui-même les tests en jeu. La validation et la décision de fusion restent humaines.
+- LogogramHelperFR : push sur `main` → `build-package.yml` → commit de `dist/latest.zip`; push sur `dev-language-toggle` → `build-dev-package.yml` → commit de `dist/dev-latest.zip`. Le canal DEV utilise temporairement l'identité `LogogramHelperFRDev`, puis restaure les sources avant de committer le ZIP.
+- OccultWeakness : push sur `main` → `build-package.yml` → commit de `dist/latest.zip`. Aucune automatisation de publication n'est définie pour `fix-icon-padding`.
+- Ces workflows LogogramHelperFR/OccultWeakness acceptent aussi `workflow_dispatch` et font un checkout explicite de leur branche de publication, indépendamment de la référence choisie pour le lancement manuel. Ils valident la présence de la DLL et du manifest dans le ZIP, puis committent et poussent uniquement si le package change, avec `[skip ci]`. Un push ne touchant que le ZIP du canal est exclu par `paths-ignore`. Ils ne créent aucune GitHub Release.
+
+### Releases existantes et traçabilité
+
+- Pour DalaFacing et DalaUndercut, le tag stable provient de `<Version>` du `.csproj`, avec retrait du dernier suffixe `.0` (`0.2.3.0` → `v0.2.3`). Si la release existe déjà, `gh release upload --clobber` remplace ses ZIP : réutiliser une version peut donc modifier une publication existante sans créer de nouveau tag.
+- Le même remplacement s'applique au ZIP de `dev-latest`. Lors des mises à jour, le workflow ne déplace pas le tag existant; son commit cible peut être ancien alors que l'asset a été renouvelé.
+- L'augmentation de version et la correspondance projet/manifest/package ne sont pas imposées par ces workflows. Ne pas considérer une release existante comme immuable ni son tag DEV comme une preuve suffisante du commit compilé.
+
+### Synchronisation du catalogue DalaLeno
+
+- `build-packages.yml` se déclenche sur les push vers `main` touchant `pluginmaster.json`, `pluginmaster-dev.json` ou le workflow lui-même, sur `workflow_dispatch`, ainsi que sur les PR `opened`, `reopened` et `synchronize`, sans filtre de branche ni de chemin pour les PR.
+- Il fait toujours un checkout de `main`, télécharge les packages publiés et tente de committer/pousser les ZIP et icônes modifiés sur `main`, avec `[skip ci]`. Aucune condition ne réserve cette écriture aux push ou lancements manuels : ouvrir ou mettre à jour une PR peut donc tenter de modifier la distribution sur `main`, sans tester le contenu de la PR. La réussite dépend des permissions du jeton et des protections de branche; les PR de forks ont normalement des droits restreints.
+- Il copie les ZIP stables de LogogramHelperFR/OccultWeakness depuis leurs `main`, les ZIP stables de Facing/Undercut depuis leurs dernières releases et leurs ZIP DEV depuis `dev-latest`. Il télécharge et valide l'icône Facing et génère celle d'Undercut. Il ne modifie pas les manifests JSON.
+- Aucune planification ni notification inter-dépôts n'est définie : publier un package source ne lance pas directement cette synchronisation. Vérifier qu'un événement propre à DalaLeno intervient après disponibilité des packages. Le DEV LogogramHelperFR fait exception à la copie : son manifest pointe directement vers `dev-language-toggle/dist/dev-latest.zip` dans le dépôt source.
+- Les tests d'intégrité ZIP et de l'icône Facing ne vérifient pas la concordance des versions internes avec `AssemblyVersion`. Contrôler cette cohérence séparément; l'écart Undercut DEV (`0.3.5.0` au catalogue contre `0.3.5.1` dans le package inspecté) est documenté dans `docs/DECISIONS.md` et `docs/ROADMAP.md`.
+
+### Précautions avant une opération distante
+
+- Avant tout push, fusion de PR, création/mise à jour de PR ou lancement manuel, identifier les workflows applicables et leurs effets sur les releases, les ZIP et le catalogue. Un changement documentaire peut aussi publier ou synchroniser des packages.
+- Avant une opération sur une branche stable, vérifier les versions, tags et assets existants, les packages attendus, le succès de la CI et les validations en jeu requises. Pour Facing/Undercut, vérifier le message final du commit sur `main` si une publication doit être évitée; `[skip release]` ne désactive que le job stable concerné, pas la CI ni la publication DEV.
+- Les protections de branches, approbations, permissions Actions et autorisations de création de PR ne sont pas garanties par les fichiers YAML. Les vérifier sur GitHub au besoin; une consigne de validation n'est pas une barrière technique.
+- Les README de Facing/Undercut mentionnent encore l'ancienne branche `release`; suivre les workflows actuels et les conventions `dev/main` définies ici, sans recréer `release`.
+
+## Modèles de référence pour les nouveaux plugins Dalamud
+
+DalaFacing et DalaUndercut sont les modèles de référence pour créer et gérer les futurs plugins. Sauf justification technique particulière, documentée pour le nouveau plugin, reprendre leur organisation :
+
+- `dev` pour le développement et les tests; `main` réservée aux versions stables.
+- Compilation et validation automatiques avec GitHub Actions, notamment sur les push et les pull requests concernées.
+- Publication automatique d'une préversion `dev-latest` après les modifications poussées sur `dev`.
+- Après validation, notamment en jeu si nécessaire, promotion contrôlée par pull request `dev → main`, sans fusion automatique.
+- Publication automatique d'une GitHub Release stable après validation et fusion dans `main`.
+- Gestion cohérente de la version du projet, des tags, des manifests et des ZIP; tenir compte des risques de remplacement et de traçabilité décrits ci-dessus plutôt que les reproduire sans examen.
+- Intégration au catalogue DalaLeno lorsque nécessaire, en prévoyant la cohérence des versions et la synchronisation effective des packages.
+
+Cette règle concerne uniquement les nouveaux plugins. Elle n'autorise ni la migration automatique des plugins existants utilisant un autre fonctionnement, ni une publication sans demande explicite. Préserver notamment les flux actuels de LogogramHelperFR et OccultWeakness.
+
 ## Règles Git et publication
 
 - Préserver le flux existant de chaque dépôt; ne pas normaliser tous les dépôts vers une structure unique.
